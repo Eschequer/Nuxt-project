@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: 'index'
+  name: 'Index'
 };
 </script>
 
@@ -46,6 +46,7 @@ export default {
       padding: 10px;
       box-sizing: border-box;
       border-bottom: 3px solid #ccc;
+      margin-bottom: 37px;
 
       .post-detail {
         color: rgb(88, 88, 88);
@@ -68,6 +69,7 @@ export default {
   }
 
   .post-feedback {
+    margin-top: 5px;
     a {
       color: red;
       text-decoration: none;
