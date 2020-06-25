@@ -35,14 +35,14 @@ export default {
 .inverted {
   background-color: white;
   color: black;
-  border: 1px solid transparent;
+  border: 1px solid;
 }
 
 .inverted:hover,
 .inverted:active {
   color: #ccc;
   background-color: white;
-  border: 1px solid transparent;
+  border: 1px solid;
 }
 
 .cancel {

@@ -1,12 +1,14 @@
 <template>
   <div class="single-post-page">
     <section class="post">
-      <h1 class="post-title">Title of the Post</h1>
+      <h1 class="post-title">Title of the Post {{ loadedPosts.id }}</h1>
       <div class="post-details">
-        <div class="post-detail">Last updated on XXX</div>
-        <div class="post-detail">Written by Name</div>
+        <div class="post-detail">
+          Last updated on {{ loadedPosts.updatedDate }}
+        </div>
+        <div class="post-detail">Written by {{ loadedPosts.author }}</div>
       </div>
-      <p>Content of the post</p>
+      <p>{{ loadedPosts.previewText }}</p>
     </section>
     <section class="post-feedback">
       <p>
@@ -21,7 +23,27 @@
 
 <script>
 export default {
-  name: 'Index'
+  name: 'Index',
+  asyncData(context) {
+    return new Promise((resolve, reject) => {
+      resolve({
+        loadedPosts: {
+          id: context.params.id,
+          previewText: 'Id number of this blog is ' + context.route.params.id,
+          updatedDate: new Date().toLocaleString('en-GB'),
+          author: 'Maxksim'
+        }
+      });
+      reject(new Error('Error!!!'));
+    })
+      .then((result) => result)
+      .catch((error) => console.log(error));
+  },
+  data() {
+    return {
+      loadedPosts: {}
+    };
+  }
 };
 </script>
 

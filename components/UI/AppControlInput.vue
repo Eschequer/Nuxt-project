@@ -52,6 +52,7 @@ export default {
   font: inherit;
   border: 1px solid #ccc;
   padding: 5px;
+  margin: 5px 0;
 }
 
 .input-control input:focus,

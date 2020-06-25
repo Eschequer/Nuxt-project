@@ -1,20 +1,13 @@
 <template>
   <section class="posts-list">
     <PostPreview
-      id="1"
-      title="Greetings!"
-      thumbnail="https://cdn.pixabay.com/photo/2018/01/17/20/22/analytics-3088958_1280.jpg"
-      preview-text="This is my first post"
-    /><PostPreview
-      id="2"
-      title="Hey there!"
-      thumbnail="https://cdn.pixabay.com/photo/2018/01/17/20/22/analytics-3088958_1280.jpg"
-      preview-text="This is my second post"
-    /><PostPreview
-      id="3"
-      title="Hi again!"
-      thumbnail="https://cdn.pixabay.com/photo/2017/06/21/07/33/background-2426328_1280.jpg"
-      preview-text="It's my next post"
+      v-for="post in posts"
+      :id="post.id"
+      :key="post.id"
+      :is-admin="isAdmin"
+      :title="post.title"
+      :thumbnail="post.thumbnail"
+      :preview-text="post.previewText"
     />
   </section>
 </template>
@@ -26,6 +19,16 @@ export default {
   name: 'PostList',
   components: {
     PostPreview
+  },
+  props: {
+    isAdmin: {
+      type: Boolean,
+      default: false
+    },
+    posts: {
+      type: Array,
+      required: true
+    }
   }
 };
 </script>
