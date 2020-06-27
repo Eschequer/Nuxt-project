@@ -1,9 +1,9 @@
 <template>
   <section class="posts-list">
     <PostPreview
-      v-for="post in posts"
-      :id="post.id"
-      :key="post.id"
+      v-for="(post, index) in posts"
+      :id="index"
+      :key="index"
       :is-admin="isAdmin"
       :title="post.title"
       :thumbnail="post.thumbnail"

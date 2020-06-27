@@ -34,10 +34,11 @@ export default {
           author: 'Maxksim'
         }
       });
+
       reject(new Error('Error!!!'));
     })
       .then((result) => result)
-      .catch((error) => console.log(error));
+      .catch(context.error());
   },
   data() {
     return {

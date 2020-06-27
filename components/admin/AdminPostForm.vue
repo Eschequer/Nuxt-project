@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     save() {
-      console.log(this.editedPost);
+      this.$emit('save', this.editedPost);
     },
     cancel() {
       this.$router.push('/admin');

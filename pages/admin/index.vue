@@ -20,7 +20,6 @@ export default {
   layout: 'admin',
   components: { AppButton, PostList },
   asyncData(context) {
-    console.log(context);
     return new Promise((resolve, reject) => {
       resolve({
         loadedPosts: [
