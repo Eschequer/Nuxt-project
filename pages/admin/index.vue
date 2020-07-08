@@ -19,34 +19,43 @@ export default {
   name: 'Index',
   layout: 'admin',
   components: { AppButton, PostList },
-  asyncData(context) {
-    return new Promise((resolve, reject) => {
+  async asyncData(context) {
+    if (context.store.getters.loadedPosts.length > 0) {
+      return {
+        loadedPosts: context.store.getters.loadedPosts
+      };
+    }
+
+    return await new Promise((resolve, reject) => {
       resolve({
         loadedPosts: [
           {
             id: '1',
+            author: 'John Brown',
             title: 'My First Post',
             previewText: 'This is my first blog! Join me!',
-            thumbnail:
+            thumbnailLink:
               'https://cdn.pixabay.com/photo/2019/07/14/16/29/pen-4337524_1280.jpg'
           },
           {
             id: '2',
+            author: 'Nicky',
             title: 'My Second Post',
             previewText: 'This is my second blog!',
-            thumbnail:
+            thumbnailLink:
               'https://cdn.pixabay.com/photo/2019/07/14/16/29/pen-4337524_1280.jpg'
           },
           {
             id: '3',
+            author: 'Cat',
             title: 'Third Post',
             previewText: 'Interesting Info About Technology',
-            thumbnail:
+            thumbnailLink:
               'https://cdn.pixabay.com/photo/2015/03/07/05/24/technology-662833_1280.jpg'
           }
         ]
       });
-    }).then((result) => result);
+    });
   },
   data() {
     return {

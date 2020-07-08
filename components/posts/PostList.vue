@@ -1,13 +1,14 @@
 <template>
   <section class="posts-list">
     <PostPreview
-      v-for="(post, index) in posts"
-      :id="index"
-      :key="index"
+      v-for="post in posts"
+      :id="post.id"
+      :key="post.id"
+      :author="post.author"
       :is-admin="isAdmin"
       :title="post.title"
-      :thumbnail="post.thumbnail"
-      :preview-text="post.previewText"
+      :thumbnail-link="post.thumbnailLink"
+      :preview-text="post.previewText ? post.previewText : post.content"
     />
   </section>
 </template>
@@ -38,7 +39,6 @@ export default {
   display: flex;
   padding: 20px;
   flex-wrap: wrap;
-  align-items: center;
   justify-content: center;
 }
 </style>

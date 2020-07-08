@@ -1,14 +1,17 @@
 <template>
   <div class="single-post-page">
     <section class="post">
-      <h1 class="post-title">Title of the Post {{ loadedPosts.id }}</h1>
+      <h1 class="post-title">
+        Title of the Post <span>{{ this.$route.params.id }}</span> is
+        {{ loadedPost.title | getUpperCase }}
+      </h1>
       <div class="post-details">
         <div class="post-detail">
-          Last updated on {{ loadedPosts.updatedDate }}
+          Last updated on
+          {{ loadedPost.updatedDate | getLocaleDate }}
         </div>
-        <div class="post-detail">Written by {{ loadedPosts.author }}</div>
+        <div class="post-detail">Written by {{ loadedPost.author }}</div>
       </div>
-      <p>{{ loadedPosts.previewText }}</p>
     </section>
     <section class="post-feedback">
       <p>
@@ -22,27 +25,34 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Index',
-  asyncData(context) {
-    return new Promise((resolve, reject) => {
-      resolve({
-        loadedPosts: {
-          id: context.params.id,
-          previewText: 'Id number of this blog is ' + context.route.params.id,
-          updatedDate: new Date().toLocaleString('en-GB'),
-          author: 'Maxksim'
-        }
-      });
+  filters: {
+    getUpperCase(val) {
+      return val.toUpperCase();
+    },
+    getLocaleDate(date) {
+      return new Date(date).toLocaleString('en-GB');
+    }
+  },
+  async asyncData(context) {
+    try {
+      const { data: loadedPost } = await axios.get(
+        'https://my-nuxt-blog-bc8fb.firebaseio.com/posts/' +
+          context.params.id +
+          '.json'
+      );
 
-      reject(new Error('Error!!!'));
-    })
-      .then((result) => result)
-      .catch(context.error());
+      return { loadedPost };
+    } catch (e) {
+      console.dir(e);
+    }
   },
   data() {
     return {
-      loadedPosts: {}
+      loadedPost: {}
     };
   }
 };
@@ -59,6 +69,11 @@ export default {
 
     .post-title {
       margin: 0;
+
+      span {
+        font-size: 0.5em;
+        color: gray;
+      }
     }
 
     .post-details {

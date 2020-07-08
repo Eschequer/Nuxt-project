@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="save">
+  <form @submit.prevent="submit">
     <AppControlInput v-model="editedPost.author">Author Name</AppControlInput>
     <AppControlInput v-model="editedPost.title">Title</AppControlInput>
     <AppControlInput v-model="editedPost.thumbnailLink"
@@ -40,12 +40,13 @@ export default {
             author: '',
             title: '',
             thumbnailLink: '',
-            content: ''
+            content: '',
+            updatedDate: new Date()
           }
     };
   },
   methods: {
-    save() {
+    submit() {
       this.$emit('save', this.editedPost);
     },
     cancel() {

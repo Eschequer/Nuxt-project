@@ -1,13 +1,12 @@
 <template>
   <div class="admin-new=post-page">
     <section class="new-post-form">
-      <AdminPostForm @save="save" />
+      <AdminPostForm @save="onSave" />
     </section>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
 import AdminPostForm from '~/components/admin/AdminPostForm';
 
 export default {
@@ -15,10 +14,10 @@ export default {
   layout: 'admin',
   components: { AdminPostForm },
   methods: {
-    save(postData) {
-      axios
-        .post('https://my-nuxt-blog-bc8fb.firebaseio.com/posts.json', postData)
-        .then((result) => console.dir(result))
+    onSave(postData) {
+      this.$store
+        .dispatch('addPost', postData)
+        .then(() => this.$router.push('/admin'))
         .catch((error) => console.dir(error));
     }
   }

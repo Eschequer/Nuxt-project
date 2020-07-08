@@ -3,10 +3,11 @@
     <article>
       <div
         class="post-thumbnail"
-        :style="{ backgroundImage: 'url(' + thumbnail + ')' }"
+        :style="{ backgroundImage: 'url(' + thumbnailLink + ')' }"
       ></div>
       <div class="post-content">
         <h1>{{ title }}</h1>
+        <p>Hi, my name is {{ author }}</p>
         <p>{{ previewText }}</p>
       </div>
     </article>
@@ -17,8 +18,12 @@
 export default {
   name: 'PostPreview',
   props: {
+    author: {
+      type: String,
+      required: true
+    },
     id: {
-      type: Number,
+      type: String,
       required: true
     },
     title: {
@@ -29,7 +34,7 @@ export default {
       type: String,
       required: true
     },
-    thumbnail: {
+    thumbnailLink: {
       type: String,
       required: true
     },
@@ -68,6 +73,10 @@ a.post-preview {
     .post-content {
       padding: 10px;
       text-align: center;
+
+      & > * {
+        margin: 5px;
+      }
     }
   }
 }

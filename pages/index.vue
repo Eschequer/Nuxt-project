@@ -18,8 +18,7 @@ export default {
     loadedPosts() {
       return this.$store.getters.loadedPosts;
     }
-  },
-  created() {}
+  }
 };
 </script>
 

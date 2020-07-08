@@ -40,7 +40,6 @@ export default {
     position: fixed;
     height: 60px;
     display: flex;
-    justify-content: space-around;
     align-items: center;
     background-color: black;
     z-index: 100;
