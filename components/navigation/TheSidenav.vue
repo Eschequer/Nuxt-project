@@ -76,7 +76,7 @@ export default {
 
   .slide-side-enter-active,
   .slide-side-leave-active {
-    transition: all 1.5s ease-out;
+    transition: all 1s ease-out;
   }
   .slide-side-enter,
   .slide-side-leave-to {

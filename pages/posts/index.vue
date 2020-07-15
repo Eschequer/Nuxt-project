@@ -5,13 +5,8 @@
 </template>
 
 <script>
-import PostList from '~/components/posts/PostList';
-
 export default {
   name: 'Index',
-  components: {
-    PostList
-  },
   fetch(context) {
     if (context.store.getters.loadedPosts.length > 0) {
       console.log('store has posts and fetch aborted');

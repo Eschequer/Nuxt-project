@@ -13,12 +13,9 @@
 </template>
 
 <script>
-import PostList from '~/components/posts/PostList';
-import AppButton from '~/components/UI/AppButton';
 export default {
   name: 'Index',
   layout: 'admin',
-  components: { AppButton, PostList },
   async asyncData(context) {
     if (context.store.getters.loadedPosts.length > 0) {
       return {
@@ -60,6 +57,11 @@ export default {
   data() {
     return {
       loadedPosts: []
+    };
+  },
+  head() {
+    return {
+      title: 'Admin Page'
     };
   }
 };

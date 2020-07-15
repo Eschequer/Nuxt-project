@@ -25,15 +25,17 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: { color: '#fff', height: '5px' },
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['~assets/styles/main.css'],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    '~plugins/core-components.js'
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -52,8 +54,8 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {
-      if (ctx.isDev && ctx.isClient) {
+    extend(config, { isClient, isDev }) {
+      if (isDev && isClient) {
         config.module.rules.push({
           enforce: "pre",
           test: /\.(js|vue)$/,
@@ -66,5 +68,13 @@ export default {
         });
       }
     }
+  },
+  pageTransition: {
+    name: 'fade',
+    mode: 'out-in'
+  },
+  layoutTransition: {
+    name: 'fade',
+    mode: 'out-in'
   }
 };
