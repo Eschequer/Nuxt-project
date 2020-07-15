@@ -16,6 +16,7 @@
 export default {
   name: 'Index',
   layout: 'admin',
+  middleware: ['check-auth', 'auth', 'log'],
   async asyncData(context) {
     if (context.store.getters.loadedPosts.length > 0) {
       return {

@@ -11,6 +11,7 @@ import AdminPostForm from '~/components/admin/AdminPostForm';
 
 export default {
   name: 'Index',
+  middleware: ['log', 'check-auth', 'auth'],
   layout: 'admin',
   components: { AdminPostForm },
   async asyncData(context) {

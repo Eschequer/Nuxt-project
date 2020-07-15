@@ -58,6 +58,7 @@ export default {
   build: {
     /*
      ** You can extend webpack config here
+     *
      */
     extend(config, { isClient, isDev }) {
       if (isDev && isClient) {
@@ -81,5 +82,11 @@ export default {
   layoutTransition: {
     name: 'fade',
     mode: 'out-in'
-  }
+  },
+  env: {
+    fbAPIKey: 'AIzaSyD-YiRzzlcPhVDLpQhh4fbTZj3Ot5xbyX8'
+  },
+  /*router: {
+    middleware: 'log'
+  }*/
 };

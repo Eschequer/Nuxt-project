@@ -7,6 +7,7 @@
 <script>
 export default {
   name: 'Index',
+  middleware: 'log',
   fetch(context) {
     if (context.store.getters.loadedPosts.length > 0) {
       console.log('store has posts and fetch aborted');

@@ -12,6 +12,7 @@ import AdminPostForm from '~/components/admin/AdminPostForm';
 export default {
   name: 'Index',
   layout: 'admin',
+  middleware: ['check-auth', 'auth'],
   components: { AdminPostForm },
   methods: {
     onSave(postData) {
