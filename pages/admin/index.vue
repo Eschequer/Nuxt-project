@@ -1,9 +1,10 @@
 <template>
   <div class="admin-page">
     <section class="new-post">
-      <AppButton @click="$router.push('/admin/new-post')"
-        >Create Post</AppButton
-      >
+      <AppButton @click="$router.push('/admin/new-post')">
+        Create Post
+      </AppButton>
+      <AppButton @click="logout">Logout</AppButton>
     </section>
     <section class="existing-posts">
       <h1>Existing Posts</h1>
@@ -16,7 +17,7 @@
 export default {
   name: 'Index',
   layout: 'admin',
-  middleware: ['check-auth', 'auth', 'log'],
+  middleware: ['check-auth', 'log', 'auth'],
   async asyncData(context) {
     if (context.store.getters.loadedPosts.length > 0) {
       return {
@@ -59,6 +60,12 @@ export default {
     return {
       loadedPosts: []
     };
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout');
+      this.$router.push('/admin/auth');
+    }
   },
   head() {
     return {

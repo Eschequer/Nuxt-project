@@ -1,4 +1,5 @@
 import Vuex from 'vuex';
+import Cookies from 'js-cookie';
 
 const createStore = function() {
   return new Vuex.Store({
@@ -71,8 +72,13 @@ const createStore = function() {
               new Date().getTime() + res.expiresIn * 1000
             );
 
+            Cookies.set('idToken', res.idToken);
+            Cookies.set(
+              'expirationDate',
+              new Date().getTime() + res.expiresIn * 1000
+            );
+
             commit('setToken', res.idToken);
-            dispatch('setLogoutTimer', res.expiresIn * 1000);
           })
           .catch((e) => console.dir(e));
       },
@@ -90,25 +96,48 @@ const createStore = function() {
       setPosts(context, posts) {
         context.commit('setPosts', posts);
       },
-      initAuh({ commit, dispatch }) {
-        const token = localStorage.getItem('token');
-        const expirationDate = localStorage.getItem('tokenExpiration');
+      initAuh({ commit, dispatch }, req) {
+        let token;
+        let expirationDate;
 
-        console.dir(`expiration date is ` + new Date(+expirationDate));
+        if (req) {
+          if (!req.headers.cookie) return;
+
+          const tokenCookie = req.headers.cookie
+            .split(';')
+            .find((c) => c.trim().startsWith('idToken='));
+          const expirationDateCookie = req.headers.cookie
+            .split(';')
+            .find((c) => c.trim().startsWith('expirationDate='));
+
+          if (!tokenCookie || !expirationDateCookie) return;
+
+          token = tokenCookie.split('=')[1];
+          expirationDate = expirationDateCookie.split('=')[1];
+        } else {
+          token = localStorage.getItem('token');
+          expirationDate = localStorage.getItem('tokenExpiration');
+
+          console.dir(`expiration date is ` + new Date(+expirationDate));
+        }
 
         if (new Date() > expirationDate || !token) {
-          console.log(new Date(+expirationDate));
-          console.log('Expired');
+          console.log('Expired at ' + new Date(+expirationDate));
+          commit('clearToken');
           return;
         }
 
         commit('setToken', token);
-        dispatch('setLogoutTimer', +expirationDate - new Date());
       },
-      setLogoutTimer(context, duration) {
-        setTimeout(() => {
-          context.commit('clearToken');
-        }, duration);
+      logout({ commit }) {
+        commit('clearToken');
+        Cookies.remove('idToken');
+        Cookies.remove('expirationDate');
+
+        if (process.client) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('tokenExpiration');
+        }
       },
       async nuxtServerInit(vuexContext, context) {
         let posts = {};
