@@ -79,6 +79,10 @@ const createStore = function() {
             );
 
             commit('setToken', res.idToken);
+
+            return this.$axios.$post('http://localhost:3000/api/track-data', {
+              data: 'Authenticated!'
+            });
           })
           .catch((e) => console.dir(e));
       },
@@ -114,7 +118,7 @@ const createStore = function() {
 
           token = tokenCookie.split('=')[1];
           expirationDate = expirationDateCookie.split('=')[1];
-        } else {
+        } else if (process.client) {
           token = localStorage.getItem('token');
           expirationDate = localStorage.getItem('tokenExpiration');
 
